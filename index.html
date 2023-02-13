@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="icon" href="https://i.gyazo.com/0aa7908931f32799b49503d24ea1456f.png">
+
+    <title>Ruby on Browser</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-light rob-navbar">
+      <div class="container-fluid">
+        <a class="navbar-brand rob-navbar" href="https://rubyonbrowser.ongaeshi.me">
+          <img src="https://i.gyazo.com/0aa7908931f32799b49503d24ea1456f.png" alt="" width="24" class="d-inline-block align-text-top">
+          Ruby on Browser
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active rob-navbar" aria-current="page" href="https://docs.ruby-lang.org/en/master/" target="_blank">Docs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active rob-navbar" aria-current="page" href="https://docs.ruby-lang.org/ja/latest/doc/index.html" target="_blank">Docs(ja)</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active rob-navbar" aria-current="page" href="https://github.com/ongaeshi/rubyonbrowser/" target="_blank">GitHub</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active rob-navbar" aria-current="page" href="https://scrapbox.io/rubyonbrowser/" target="_blank">Scrapbox</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid py-2">
+      <div class="row">
+        <div class="col-lg">
+          <textarea id="input" class="form-control font-monospace" rows="10">3.times do
+  puts ["Hello", "😀", "❤️"].sample
+end
+</textarea>
+          <button id="clear" type="button" class="btn btn-secondary">Select All</button>
+          <button id="run" type="button" class="btn btn-primary float-end">Run (Ctrl + Enter)</button>
+        </div>
+        <div class="col-lg">
+          <div id="canvasdiv">
+            <canvas id="canvas" width="300" height="300"></canvas>
+          </div>
+          <textarea id="output" class="form-control font-monospace" rows="10" readonly></textarea>
+          <textarea id="files" class="form-control font-monospace" rows="5" readonly></textarea>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  </body>
+</html>

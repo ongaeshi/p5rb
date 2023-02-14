@@ -30,16 +30,6 @@
 #   setup
 # }
 
-$p = nil
-
-def method_missing(name, *args)
-  if $p.respond_to?(name)
-    $p.call(name, *args)
-  else
-    super
-  end
-end
-
 def setup
   createCanvas(700, 410)
 end
@@ -51,25 +41,3 @@ def draw
   fill(255)
   rect(x, y, 50, 50)
 end
-
-require 'js'
-
-p5 = JS.global[:p5]
-window = JS.global[:window]
-document = window[:document]
-
-sketch = ->(p) {
-  $p = p
-
-  p[:setup] = -> {
-    setup
-  }
-
-  p[:draw] = -> {
-    draw
-  }
-}
-
-container = document.querySelector('main')
-container[:innerHTML] = ''
-window[:constructors].p5(sketch, container)

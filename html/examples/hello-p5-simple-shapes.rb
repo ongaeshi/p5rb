@@ -19,7 +19,7 @@ def setup
   noStroke()
   10.times do
     ellipse(0, 30, 20, 80)
-    rotate(1) # PI/5 (TODO: Floating point cannot be passed as an argument?) 
+    rotate(Math::PI/5)
   end
 end
 

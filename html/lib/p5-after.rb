@@ -5,15 +5,9 @@ window = JS.global[:window]
 document = window[:document]
 
 sketch = ->(p) {
-  $p = p
-
-  p[:setup] = -> {
-    setup
-  }
-
-  p[:draw] = -> {
-    draw
-  }
+  $p = p  
+  p[:setup] = -> { setup } if defined?(setup)
+  p[:draw] = -> { draw } if defined?(draw)
 }
 
 container = document.querySelector('main')

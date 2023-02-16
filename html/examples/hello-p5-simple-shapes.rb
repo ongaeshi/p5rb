@@ -22,6 +22,3 @@ def setup
     rotate(Math::PI/5)
   end
 end
-
-def draw
-end

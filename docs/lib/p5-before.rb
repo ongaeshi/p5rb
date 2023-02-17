@@ -5,28 +5,39 @@ $p = nil
 # <a href="https://learnui.design/blog/the-hsb-color-system-practicioners-primer.html">HSB</a>.
 HSB = 'hsb'
 
-class Element
-  def initialize(obj)
-    @obj = obj
+# ruby.wasm/ext/js/lib/js.rb
+# https://github.com/ruby/ruby.wasm/blob/main/ext/js/lib/js.rb#L105
+module JS::Object
+  def method_missing(sym, *args, &block)
+    obj = self[sym]
+  
+    if obj != nil
+      if obj.typeof == "function"
+        self.call(sym, *args, &block).to_r
+      elsif args.count == 0
+        obj.to_r
+      end
+    end
+
+    super
   end
 
-  def obj = @obj
-  def value = @obj.call(:value).to_f
-end
+  def respond_to_missing?(sym, include_private)
+    return true if super
+    self[sym] != nil
+  end
 
-def createSlider(*args) = Element.new($p.call(:createSlider, *args))
-
-class JS::Object
   def to_r
-    case ret.typeof
+    case self.typeof
     when "number"
-      ret.to_f
+      self.to_f
     when "string"
-      ret.to_s
+      self.to_s
     else
-      ret
+      self
     end
   end
+end
 end
 
 def method_missing(name, *args)

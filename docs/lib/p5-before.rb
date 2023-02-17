@@ -14,10 +14,6 @@ class Element
   def value = @obj.call(:value).to_f
 end
 
-def width = $p[:width].to_i
-def height = $p[:height].to_i
-def mouseX = $p[:mouseX].to_f
-def mouseY = $p[:mouseY].to_f
 def createSlider(*args) = Element.new($p.call(:createSlider, *args))
 
 class JS::Object
@@ -34,10 +30,15 @@ class JS::Object
 end
 
 def method_missing(name, *args)
+  if args.count == 0
+    field = $p[name]
+    return field unless field.nil?
+  end
+
   if $p.respond_to?(name)
     $p.call(name, *args).to_r
-  else
-    super
   end
+
+  super
 end
 

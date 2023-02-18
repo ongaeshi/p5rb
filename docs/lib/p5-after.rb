@@ -1,5 +1,3 @@
-require 'js'
-
 p5 = JS.global[:p5]
 window = JS.global[:window]
 document = window[:document]

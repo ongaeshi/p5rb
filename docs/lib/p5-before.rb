@@ -45,6 +45,7 @@ class JS::Object
 end
 
 def method_missing(sym, *args, &block)
+  return super unless $p.respond_to?(:[])
   ret = $p[sym]
 
   case ret.typeof

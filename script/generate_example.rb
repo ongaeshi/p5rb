@@ -2,11 +2,12 @@
 # $ ruby script/generate_example.rb form-pie-chart "Pie Chart"
 require 'fileutils'
 
-name, title = ARGV
+while ARGV.length > 2
+  name, title = ARGV.shift(2)
 
-FileUtils.mkdir_p "docs/examples/#{name}"
+  FileUtils.mkdir_p "docs/examples/#{name}"
 
-File.write "docs/examples/#{name}/index.html", <<EOS
+  File.write "docs/examples/#{name}/index.html", <<EOS
 <html>
   <head>
     <script src="https://cdn.jsdelivr.net/npm/ruby-3_2-wasm-wasi@next/dist/browser.script.iife.js"></script>
@@ -28,10 +29,9 @@ File.write "docs/examples/#{name}/index.html", <<EOS
 </html>
 EOS
 
-File.write "docs/examples/#{name}/main.rb", <<EOS
-EOS
-
+File.write "docs/examples/#{name}/main.rb", ""
 puts "    <li><a href=\"#{name}\">#{title}</a></li>"
+end
 
 
 # p foo, bar

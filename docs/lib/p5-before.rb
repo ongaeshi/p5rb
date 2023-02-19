@@ -7,6 +7,7 @@ TWO_PI = _PI * 2
 HSB = 'hsb'
 CLOSE = 'close'
 TRIANGLE_STRIP = 0x0005
+WEBGL = 'webgl'
 
 # JS::Object can call property via function style
 class JS::Object

@@ -1,5 +1,3 @@
-TRIANGLE_STRIP = 0x0005
-
 @x = nil
 @y = nil
 @outsideRadius = 150

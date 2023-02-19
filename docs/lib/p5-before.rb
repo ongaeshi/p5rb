@@ -1,12 +1,13 @@
 require 'js'
 
-$p = nil
-
-# HSB (hue, saturation, brightness) is a type of color model.
-# You can learn more about it at
-# <a href="https://learnui.design/blog/the-hsb-color-system-practicioners-primer.html">HSB</a>.
+# Constants
+_PI = Math::PI;
+PI = _PI;
+TWO_PI = _PI * 2;
 HSB = 'hsb'
+CLOSE = 'close'
 
+# JS::Object can call property via function style
 class JS::Object
   def method_missing(sym, *args, &block)
     ret = self[sym]
@@ -43,6 +44,9 @@ class JS::Object
     end
   end
 end
+
+# Call p5.js global functions
+$p = nil
 
 def method_missing(sym, *args, &block)
   return super unless $p.respond_to?(:[])

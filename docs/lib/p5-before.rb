@@ -1,11 +1,12 @@
 require 'js'
 
 # Constants
-_PI = Math::PI;
-PI = _PI;
-TWO_PI = _PI * 2;
+_PI = Math::PI
+PI = _PI
+TWO_PI = _PI * 2
 HSB = 'hsb'
 CLOSE = 'close'
+TRIANGLE_STRIP = 0x0005
 
 # JS::Object can call property via function style
 class JS::Object

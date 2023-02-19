@@ -2,7 +2,7 @@
 # $ ruby script/generate_example.rb form-pie-chart "Pie Chart"
 require 'fileutils'
 
-while ARGV.length > 2
+while ARGV.length >= 2
   name, title = ARGV.shift(2)
 
   FileUtils.mkdir_p "docs/examples/#{name}"

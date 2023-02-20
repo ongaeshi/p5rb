@@ -9,11 +9,6 @@ CLOSE = 'close'
 TRIANGLE_STRIP = 0x0005
 WEBGL = 'webgl'
 
-# Class
-module P5
-  Vector = JS.global[:p5][:Vector]
-end
-
 # JS::Object can call property via function style
 class JS::Object
   def method_missing(sym, *args, &block)
@@ -76,3 +71,23 @@ end
 
 # Add new p5() to window.constructors.p5()
 JS.eval("window.constructors = { p5: (...args) => new p5(...args) };")
+
+module P5
+  Vector = JS.global[:p5][:Vector]
+
+  module_function
+
+  def init(query = "main")
+    sketch = ->(p) {
+      $p = p  
+      $p[:setup] = -> { setup } if defined?(setup)
+      $p[:draw] = -> { draw } if defined?(draw)
+      $p[:mousePressed] = ->(e) { mousePressed } if defined?(mousePressed)
+    }
+    
+    container = JS.global.document.querySelector(query)
+    container.innerHTML = ""
+    JS.global.window.constructors.p5(sketch, container)
+  end
+end
+

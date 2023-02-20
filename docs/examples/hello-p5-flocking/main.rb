@@ -31,7 +31,7 @@ class Boid
   def run(boids)
     flock(boids)
     update
-    # borders
+    borders
     render
   end
 
@@ -64,6 +64,14 @@ class Boid
     @position.add(@velocity)
     # Reset acceleration to 0 each cycle
     @acceleration.mult(0)
+  end
+
+  # Wraparound
+  def borders
+    @position.x = width + @r if position.x < -@r
+    @position.y = height + @r if @position.y < -@r
+    @position.x = -@r if @position.x > width + @r
+    @position.y = -@r if @position.y > height + @r
   end
 
   # Separation

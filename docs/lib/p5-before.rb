@@ -73,3 +73,6 @@ def method_missing(sym, *args, &block)
     ret.to_r
   end
 end
+
+# Add new p5() to window.constructors.p5()
+JS.eval("window.constructors = { p5: (...args) => new p5(...args) };")

@@ -9,6 +9,11 @@ CLOSE = 'close'
 TRIANGLE_STRIP = 0x0005
 WEBGL = 'webgl'
 
+# Class
+module P5
+  Vector = JS.global[:p5][:Vector]
+end
+
 # JS::Object can call property via function style
 class JS::Object
   def method_missing(sym, *args, &block)

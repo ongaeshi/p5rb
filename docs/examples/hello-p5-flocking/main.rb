@@ -4,7 +4,7 @@ def setup
   createCanvas(720, 400)
 
   # Add an initial set of boids into the system
-  for _ in 0...100 do
+  for _ in 0...10 do
     $boids.push(Boid.new(random(width), random(height)))
   end
 end

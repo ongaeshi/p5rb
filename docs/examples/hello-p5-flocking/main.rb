@@ -43,16 +43,16 @@ class Boid
   # We accumulate a new acceleration each time based on three rules
   def flock(boids)
     sep = separate(boids)  # Separation
-    # ali = align(boids)     # Alignment
-    # coh = cohesion(boids)  # Cohesion
+    ali = align(boids)     # Alignment
+    coh = cohesion(boids)  # Cohesion
     # Arbitrarily weight these forces
     sep.mult(2.5)
-    # ali.mult(1.0)
-    # coh.mult(1.0)
+    ali.mult(1.0)
+    coh.mult(1.0)
     # Add the force vectors to acceleration
     applyForce(sep)
-    # applyForce(ali)
-    # applyForce(coh)
+    applyForce(ali)
+    applyForce(coh)
   end
 
   # Method to update location
@@ -64,6 +64,26 @@ class Boid
     @position.add(@velocity)
     # Reset acceleration to 0 each cycle
     @acceleration.mult(0)
+  end
+
+  # A method that calculates and applies a steering force towards a target
+  # STEER = DESIRED MINUS VELOCITY
+  def seek(target)
+    desired = P5::Vector.sub(target, @position) # A vector pointing from the location to the target
+    # Normalize desired and scale to maximum speed
+    desired.normalize()
+    desired.mult(@maxspeed)
+    # Steering = Desired minus Velocity
+    steer = P5::Vector.sub(desired, @velocity)
+    steer.limit(@maxforce) # Limit to maximum steering force
+    steer
+  end
+  
+  # Draw boid as a circle
+  def render
+    fill(127, 127)
+    stroke(200)
+    ellipse(@position.x, @position.y, 16, 16)
   end
 
   # Wraparound
@@ -109,10 +129,49 @@ class Boid
     steer
   end
 
-  # Draw boid as a circle
-  def render
-    fill(127, 127)
-    stroke(200)
-    ellipse(@position.x, @position.y, 16, 16)
+  # Alignment
+  # For every nearby boid in the system, calculate the average velocity
+  def align(boids)
+    neighbordist = 50
+    sum = createVector(0, 0)
+    count = 0
+    boids.each do |boid|
+      d = P5::Vector.dist(@position, boid.position)
+      if (d > 0) && (d < neighbordist)
+        sum.add(boid.velocity)
+        count += 1
+      end
+    end
+    if count > 0
+      sum.div(count)
+      sum.normalize()
+      sum.mult(@maxspeed)
+      steer = P5::Vector.sub(sum, @velocity)
+      steer.limit(@maxforce)
+      steer
+    else
+      createVector(0, 0)
+    end
+  end
+  
+  # Cohesion
+  # For the average location (i.e. center) of all nearby boids, calculate steering vector towards that location
+  def cohesion(boids)
+    neighbordist = 50
+    sum = createVector(0, 0) # Start with empty vector to accumulate all locations
+    count = 0
+    boids.each do |boid|
+      d = P5::Vector.dist(@position, boid.position)
+      if (d > 0) && (d < neighbordist)
+        sum.add(boid.position) # Add location
+        count += 1
+      end
+    end
+    if count > 0
+      sum.div(count)
+      seek(sum) # Steer towards the location
+    else
+      createVector(0, 0)
+    end
   end
 end

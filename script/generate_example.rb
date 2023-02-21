@@ -14,7 +14,7 @@ while ARGV.length >= 2
     <script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script>
     <script type="text/ruby" src="../../lib/p5.rb"></script>
     <script type="text/ruby" src="./main.rb"></script>
-    <script type="text/ruby" >P5::init</script>
+    <script type="text/ruby">P5::init</script>
     <title>#{title} | p5.rb</title>
   </head>
   <body>

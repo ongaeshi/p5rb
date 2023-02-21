@@ -1,13 +1,13 @@
-@x = nil
-@y = nil
-@outsideRadius = 150
-@insideRadius = 100
+$x = nil
+$y = nil
+$outsideRadius = 150
+$insideRadius = 100
 
 def setup()
   createCanvas(720, 400)
   background(204)
-  @x = width / 2
-  @y = height / 2
+  $x = width / 2
+  $y = height / 2
 end
 
 def draw()
@@ -19,12 +19,12 @@ def draw()
 
   beginShape(TRIANGLE_STRIP)
   (0..numPoints).each do |i|
-    px = @x + cos(radians(angle)) * @outsideRadius
-    py = @y + sin(radians(angle)) * @outsideRadius
+    px = $x + cos(radians(angle)) * $outsideRadius
+    py = $y + sin(radians(angle)) * $outsideRadius
     angle += angleStep
     vertex(px, py)
-    px = @x + cos(radians(angle)) * @insideRadius
-    py = @y + sin(radians(angle)) * @insideRadius
+    px = $x + cos(radians(angle)) * $insideRadius
+    py = $y + sin(radians(angle)) * $insideRadius
     vertex(px, py)
     angle += angleStep
   end

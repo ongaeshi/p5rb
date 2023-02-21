@@ -1,4 +1,4 @@
-@angles = [30, 10, 45, 35, 60, 38, 75, 67];
+$angles = [30, 10, 45, 35, 60, 38, 75, 67]
 
 def setup
   createCanvas(720, 400)
@@ -8,7 +8,7 @@ end
 
 def draw
   background(100)
-  pieChart(300, @angles)
+  pieChart(300, $angles)
 end
 
 def pieChart(diameter, data)
@@ -22,8 +22,8 @@ def pieChart(diameter, data)
       diameter,
       diameter,
       lastAngle,
-      lastAngle + radians(@angles[i])
+      lastAngle + radians($angles[i])
     )
-    lastAngle += radians(@angles[i])
+    lastAngle += radians($angles[i])
   end
 end

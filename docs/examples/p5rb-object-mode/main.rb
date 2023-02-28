@@ -46,7 +46,7 @@ class App
 
   def add_circle(x, y)
     @circles << Circle.new(x, y)
-    p @circles.count
+    puts @circles.count
   end
 end
 

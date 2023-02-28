@@ -287,11 +287,22 @@ module P5
       $p5 = p5
       $p5[:setup] = -> { setup } if defined?(setup)
       $p5[:draw] = -> { draw } if defined?(draw)
-      $p5[:mousePressed] = ->(e) { mousePressed } if defined?(mousePressed)
+      init_event_method(:mousePressed)
     }
     
     container = JS.global.document.querySelector(query)
     container.innerHTML = ""
     JS.global.window.constructors.p5(sketch, container)
+  end
+
+  def init_event_method(sym)
+    if respond_to?(sym, true)
+      m = method(sym)
+      if m.parameters.count >= 1
+        $p5[sym] = ->(e) { m.call(e) }
+      else
+        $p5[sym] = ->(e) { m.call() }
+      end
+    end
   end
 end

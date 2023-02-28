@@ -285,9 +285,20 @@ module P5
   def init(query = "main")
     sketch = ->(p5) {
       $p5 = p5
+      init_method(:preload)
       init_method(:setup)
       init_method(:draw)
+      init_event_method(:mouseMoved)
+      init_event_method(:mouseDragged)
       init_event_method(:mousePressed)
+      init_event_method(:mouseReleased)
+      init_event_method(:mouseClicked)
+      init_event_method(:doubleClicked)
+      init_event_method(:mouseWheel)
+      init_event_method(:keyPressed)
+      init_event_method(:keyReleased)
+      init_event_method(:keyTyped)
+      init_event_method(:keyIsDown)
     }
     
     container = JS.global.document.querySelector(query)

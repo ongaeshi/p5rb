@@ -62,3 +62,13 @@ def keyPressed(e)
   p [key, keyCode]
   p e.key # KeyboardEvent.key
 end
+
+def keyReleased(e)
+  p "keyReleased: #{e}"
+  puts "LEFT" if keyIsDown(LEFT_ARROW)
+end
+
+def keyTyped(e)
+  p "keyTyped: #{e}"
+end
+

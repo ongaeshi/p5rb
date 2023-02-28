@@ -298,7 +298,6 @@ module P5
       init_event_method(:keyPressed)
       init_event_method(:keyReleased)
       init_event_method(:keyTyped)
-      init_event_method(:keyIsDown)
     }
     
     container = JS.global.document.querySelector(query)

@@ -285,14 +285,21 @@ module P5
   def init(query = "main")
     sketch = ->(p5) {
       $p5 = p5
-      $p5[:setup] = -> { setup } if defined?(setup)
-      $p5[:draw] = -> { draw } if defined?(draw)
+      init_method(:setup)
+      init_method(:draw)
       init_event_method(:mousePressed)
     }
     
     container = JS.global.document.querySelector(query)
     container.innerHTML = ""
     JS.global.window.constructors.p5(sketch, container)
+  end
+
+  def init_method(sym)
+    if respond_to?(sym, true)
+      m = method(sym)
+      $p5[sym] = ->() { m.call() }
+    end
   end
 
   def init_event_method(sym)

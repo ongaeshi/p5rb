@@ -247,22 +247,22 @@ class JS::Object
 end
 
 # Call p5.js global functions
-$p = nil
+$p5 = nil
 
 def method_missing(sym, *args, &block)
-  return super unless $p.respond_to?(:[])
-  ret = $p[sym]
+  return super unless $p5.respond_to?(:[])
+  ret = $p5[sym]
 
   case ret.typeof
   when "undefined"
     # str = sym.to_s
     # if str[-1] == "="
-    #   $p[str.chop.to_sym] = args.first
+    #   $p5[str.chop.to_sym] = args.first
     #   return args.first
     # end
     super
   when "function"
-    $p.call(sym, *args, &block).to_r
+    $p5.call(sym, *args, &block).to_r
   else
     ret.to_r
   end
@@ -277,11 +277,11 @@ module P5
   module_function
 
   def init(query = "main")
-    sketch = ->(p) {
-      $p = p  
-      $p[:setup] = -> { setup } if defined?(setup)
-      $p[:draw] = -> { draw } if defined?(draw)
-      $p[:mousePressed] = ->(e) { mousePressed } if defined?(mousePressed)
+    sketch = ->(p5) {
+      $p5 = p5
+      $p5[:setup] = -> { setup } if defined?(setup)
+      $p5[:draw] = -> { draw } if defined?(draw)
+      $p5[:mousePressed] = ->(e) { mousePressed } if defined?(mousePressed)
     }
     
     container = JS.global.document.querySelector(query)

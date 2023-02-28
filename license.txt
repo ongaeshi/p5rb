@@ -1,3 +1,4 @@
+p5.rb
                     GNU LESSER GENERAL PUBLIC LICENSE
                        Version 2.1, February 1999
 
@@ -456,3 +457,8 @@ SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH
 DAMAGES.
 
                      END OF TERMS AND CONDITIONS
+----
+p5.js
+https://p5js.org/copyright.html
+
+The p5.js library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, version 2.1.

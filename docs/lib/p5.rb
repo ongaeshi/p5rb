@@ -1,14 +1,213 @@
 require 'js'
 
-# Constants
+# --------------------------------------------
+# Constants 
+# --------------------------------------------
 _PI = Math::PI
-PI = _PI
-TWO_PI = _PI * 2
-HSB = 'hsb'
-CLOSE = 'close'
-TRIANGLE_STRIP = 0x0005
+
+# The default, two-dimensional renderer.
+P2D = 'p2d'
+
+# One of the two render modes in p5.js: P2D (default renderer) and WEBGL
+# Enables 3D render by introducing the third dimension: Z
 WEBGL = 'webgl'
 
+# ENVIRONMENT
+ARROW = 'default'
+CROSS = 'crosshair'
+HAND = 'pointer'
+MOVE = 'move'
+TEXT = 'text'
+WAIT = 'wait'
+
+# TRIGONOMETRY
+
+# HALF_PI is a mathematical constant with the value
+# 1.57079632679489661923. It is half the ratio of the
+# circumference of a circle to its diameter. It is useful in
+# combination with the trigonometric functions <a href="#/p5/sin">sin()</a> and <a href="#/p5/cos">cos()</a>.
+HALF_PI = _PI / 2
+
+# PI is a mathematical constant with the value
+# 3.14159265358979323846. It is the ratio of the circumference
+# of a circle to its diameter. It is useful in combination with
+# the trigonometric functions <a href="#/p5/sin">sin()</a> and <a href="#/p5/cos">cos()</a>.
+PI = _PI
+
+# QUARTER_PI is a mathematical constant with the value 0.7853982.
+# It is one quarter the ratio of the circumference of a circle to
+# its diameter. It is useful in combination with the trigonometric
+# functions <a href="#/p5/sin">sin()</a> and <a href="#/p5/cos">cos()</a>.
+QUARTER_PI = _PI / 4
+
+# TAU is an alias for TWO_PI, a mathematical constant with the
+# value 6.28318530717958647693. It is twice the ratio of the
+# circumference of a circle to its diameter. It is useful in
+# combination with the trigonometric functions <a href="#/p5/sin">sin()</a> and <a href="#/p5/cos">cos()</a>.
+TAU = _PI * 2
+
+# TWO_PI is a mathematical constant with the value
+# 6.28318530717958647693. It is twice the ratio of the
+# circumference of a circle to its diameter. It is useful in
+# combination with the trigonometric functions <a href="#/p5/sin">sin()</a> and <a href="#/p5/cos">cos()</a>.
+TWO_PI = _PI * 2
+
+# Constant to be used with the <a href="#/p5/angleMode">angleMode()</a> function, to set the mode in
+# which p5.js interprets and calculates angles (either DEGREES or RADIANS).
+DEGREES = 'degrees'
+
+# Constant to be used with the <a href="#/p5/angleMode">angleMode()</a> function, to set the mode
+# in which p5.js interprets and calculates angles (either RADIANS or DEGREES).
+RADIANS = 'radians'
+DEG_TO_RAD = _PI / 180.0
+RAD_TO_DEG = 180.0 / _PI
+
+CORNER = 'corner'
+CORNERS = 'corners'
+RADIUS = 'radius'
+RIGHT = 'right'
+LEFT = 'left'
+CENTER = 'center'
+TOP = 'top'
+BOTTOM = 'bottom'
+BASELINE = 'alphabetic'
+
+POINTS = 0x0000
+LINES = 0x0001
+LINE_STRIP = 0x0003
+LINE_LOOP = 0x0002
+TRIANGLES = 0x0004
+TRIANGLE_FAN = 0x0006
+TRIANGLE_STRIP = 0x0005
+
+QUADS = 'quads'
+QUAD_STRIP = 'quad_strip'
+TESS = 'tess'
+CLOSE = 'close'
+OPEN = 'open'
+CHORD = 'chord'
+PIE = 'pie'
+PROJECT = 'square' # PEND: careful this is counterintuitive
+SQUARE = 'butt'
+ROUND = 'round'
+BEVEL = 'bevel'
+MITER = 'miter'
+
+# COLOR
+RGB = 'rgb'
+# HSB (hue, saturation, brightness) is a type of color model.
+# You can learn more about it at
+# <a href="https://learnui.design/blog/the-hsb-color-system-practicioners-primer.html">HSB</a>.
+HSB = 'hsb'
+HSL = 'hsl'
+
+# DOM EXTENSION
+
+# AUTO allows us to automatically set the width or height of an element (but not both),
+# based on the current height and width of the element. Only one parameter can
+# be passed to the <a href="/#/p5.Element/size">size</a> function as AUTO, at a time.
+AUTO = 'auto'
+
+# INPUT
+ALT = 18
+BACKSPACE = 8
+CONTROL = 17
+DELETE = 46
+DOWN_ARROW = 40
+ENTER = 13
+ESCAPE = 27
+LEFT_ARROW = 37
+OPTION = 18
+RETURN = 13
+RIGHT_ARROW = 39
+SHIFT = 16
+TAB = 9
+UP_ARROW = 38
+
+# RENDERING
+BLEND = 'source-over'
+REMOVE = 'destination-out'
+ADD = 'lighter'
+#ADD: 'add', #
+#SUBTRACT: 'subtract', #
+DARKEST = 'darken'
+LIGHTEST = 'lighten'
+DIFFERENCE = 'difference'
+SUBTRACT = 'subtract'
+EXCLUSION = 'exclusion'
+MULTIPLY = 'multiply'
+SCREEN = 'screen'
+REPLACE = 'copy'
+OVERLAY = 'overlay'
+HARD_LIGHT = 'hard-light'
+SOFT_LIGHT = 'soft-light'
+DODGE = 'color-dodge'
+BURN = 'color-burn'
+
+# FILTERS
+THRESHOLD = 'threshold'
+GRAY = 'gray'
+OPAQUE = 'opaque'
+INVERT = 'invert'
+POSTERIZE = 'posterize'
+DILATE = 'dilate'
+ERODE = 'erode'
+BLUR = 'blur'
+
+# TYPOGRAPHY
+NORMAL = 'normal'
+ITALIC = 'italic'
+BOLD = 'bold'
+BOLDITALIC = 'bold italic'
+CHAR = 'CHAR'
+WORD = 'WORD'
+
+# TYPOGRAPHY-INTERNAL
+_DEFAULT_TEXT_FILL = '#000000'
+_DEFAULT_LEADMULT = 1.25
+_CTX_MIDDLE = 'middle'
+
+# VERTICES
+LINEAR = 'linear'
+QUADRATIC = 'quadratic'
+BEZIER = 'bezier'
+CURVE = 'curve'
+
+# WEBGL DRAWMODES
+STROKE = 'stroke'
+FILL = 'fill'
+TEXTURE = 'texture'
+IMMEDIATE = 'immediate'
+
+# WEBGL TEXTURE MODE
+# NORMAL already exists for typography
+IMAGE = 'image'
+
+# WEBGL TEXTURE WRAP AND FILTERING
+# LINEAR already exists above
+NEAREST = 'nearest'
+REPEAT = 'repeat'
+CLAMP = 'clamp'
+MIRROR = 'mirror'
+
+# DEVICE-ORIENTATION
+LANDSCAPE = 'landscape'
+PORTRAIT = 'portrait'
+
+# DEFAULTS
+_DEFAULT_STROKE = '#000000'
+_DEFAULT_FILL = '#FFFFFF'
+
+GRID = 'grid'
+AXES = 'axes'
+LABEL = 'label'
+FALLBACK = 'fallback'
+CONTAIN = 'contain'
+COVER = 'cover'
+
+# --------------------------------------------
+# Library 
+# --------------------------------------------
 # JS::Object can call property via function style
 class JS::Object
   def method_missing(sym, *args, &block)
@@ -90,4 +289,3 @@ module P5
     JS.global.window.constructors.p5(sketch, container)
   end
 end
-

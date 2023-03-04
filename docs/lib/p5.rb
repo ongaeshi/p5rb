@@ -287,6 +287,9 @@ module P5
       query, obj = "main", query
     end
 
+    $p5&.remove()
+    $p5 = nil
+
     sketch = ->(p5) {
       $p5 = p5
       init_method(obj, :preload)

@@ -24,7 +24,7 @@
 
       globalData.vm = vm;
 
-      const p5 = await fetch("p5.rb");
+      const p5 = await fetch("../lib/p5.rb");
       const t = await p5.text();
       vm.eval(t);
 

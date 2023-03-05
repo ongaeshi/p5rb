@@ -1,56 +1,42 @@
+<!doctype html>
 <html>
-  <!-- Load `buffer` -->
-  <script src="https://bundle.run/buffer@6.0.3"></script>
-  <script src="https://cdn.jsdelivr.net/npm/ruby-3_2-wasm-wasi@next/dist/browser.umd.js"></script>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/ruby-3_2-wasm-wasi@1.0.1-2023-02-09-a/dist/browser.umd.js"></script> -->
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script>
-  <script>
-    // Expose `Buffer` into the global.
-    window.Buffer = window['buffer'].Buffer;
-    const { DefaultRubyVM } = window["ruby-wasm-wasi"];
-    const globalData = {};
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="icon" href="https://i.gyazo.com/0aa7908931f32799b49503d24ea1456f.png">
 
-    const main = async () => {
-      // Fetch and instantiate WebAssembly binary
-      const response = await fetch(
-        //      Tips: Replace the binary with debug info if you want symbolicated stack trace.
-        //      (only nightly release for now)
-        //      "https://cdn.jsdelivr.net/npm/ruby-3_2-wasm-wasi@next/dist/ruby.debug+stdlib.wasm"
-        "https://cdn.jsdelivr.net/npm/ruby-3_2-wasm-wasi@next/dist/ruby.wasm"
-      );
-      const buffer = await response.arrayBuffer();
-      const module = await WebAssembly.compile(buffer);
-      const { vm } = await DefaultRubyVM(module);
-
-      globalData.vm = vm;
-
-      const p5 = await fetch("../lib/p5.rb");
-      const t = await p5.text();
-      vm.eval(t);
-
-      vm.printVersion();
-      vm.eval(`
-def setup
-  createCanvas(710, 400)
-end
-
-def draw
-  background(204, 153, 0)
-end
-
-P5::init
-      `);
-    };
-
-    main();
-
-    const runScript = () => {
-      let s = document.querySelector("textarea").value
-      globalData.vm.eval(s + "\nP5::init");  
-    }
-  </script>
+    <title>p5.rb Editor</title>
+  </head>
   <body>
-    <textarea cols="40" rows="10">
+    <nav class="navbar navbar-expand-md navbar-light rob-navbar">
+      <div class="container-fluid">
+        <div class="navbar-brand rob-navbar">
+          <img src="https://i.gyazo.com/0aa7908931f32799b49503d24ea1456f.png" alt="" width="24" class="d-inline-block align-text-top">
+          p5.rb Editor
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active rob-navbar" aria-current="page" href="https://p5js.org/reference/" target="_blank">Docs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active rob-navbar" aria-current="page" href="https://github.com/ongaeshi/p5rb/" target="_blank">GitHub</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active rob-navbar" aria-current="page" href="../examples/" target="_blank">Examples</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid py-2">
+      <div class="row">
+        <div class="col-lg">
+          <textarea id="input" class="form-control font-monospace" rows="10">
 def setup
   createCanvas(710, 400)
 end
@@ -59,8 +45,54 @@ def draw
   background(100, 153, 0)
   line(100, 100, 200, 200)
 end    
-    </textarea>
-    <button onclick="runScript()">Run</button>
-    <main></main>
-  </body>
+</textarea>
+          <button id="clear" type="button" class="btn btn-secondary">Select All</button>
+          <button id="run" type="button" class="btn btn-primary float-end" onclick="runScript()">Run (Ctrl + Enter)</button>
+        </div>
+        <div class="col-lg">
+          <main></main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://bundle.run/buffer@6.0.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ruby-3_2-wasm-wasi@next/dist/browser.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.5.0/lib/p5.js"></script>
+    <script>
+      // Expose `Buffer` into the global.
+      window.Buffer = window['buffer'].Buffer;
+      const { DefaultRubyVM } = window["ruby-wasm-wasi"];
+      const globalData = {};
+  
+      const main = async () => {
+        // Fetch and instantiate WebAssembly binary
+        const response = await fetch(
+          //      Tips: Replace the binary with debug info if you want symbolicated stack trace.
+          //      (only nightly release for now)
+          //      "https://cdn.jsdelivr.net/npm/ruby-3_2-wasm-wasi@next/dist/ruby.debug+stdlib.wasm"
+          "https://cdn.jsdelivr.net/npm/ruby-3_2-wasm-wasi@next/dist/ruby.wasm"
+        );
+        const buffer = await response.arrayBuffer();
+        const module = await WebAssembly.compile(buffer);
+        const { vm } = await DefaultRubyVM(module);
+  
+        globalData.vm = vm;
+  
+        const p5 = await fetch("../lib/p5.rb");
+        const t = await p5.text();
+        vm.eval(t);
+  
+        vm.printVersion();
+
+        runScript();
+      };
+  
+      main();
+  
+      const runScript = () => {
+        let s = document.querySelector("textarea").value
+        globalData.vm.eval(s + "\nP5::init");  
+      }
+    </script>
+    </body>
 </html>

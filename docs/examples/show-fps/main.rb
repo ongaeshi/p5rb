@@ -1,5 +1,10 @@
 # https://twitter.com/SnowEsamosc/status/1632363858307457026
 
+def stroke(*args) = $p5.stroke(*args)
+def noise(*args) = $p5.noise(*args).to_f
+def pow(*args) = $p5.pow(*args).to_f
+def arc(*args) = $p5.arc(*args)
+  
 R=0.5
 W=500*R
 $f=0

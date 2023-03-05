@@ -31,5 +31,6 @@ def draw
 
   textSize(16)
   fill(255)
+  stroke(0)
   text("FPS: #{frameRate().round(1)}", 10, 10, 100, 100)
 end

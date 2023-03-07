@@ -40,6 +40,9 @@ const main = async () => {
 
   vm.printVersion();
 
+  document.getElementById("run").onclick = runScript;
+  document.getElementById("clear").onclick = selectAllScripts;
+
   runScript();
 };
 
@@ -48,3 +51,9 @@ main();
 const runScript = () => {
   globalData.vm.eval(codeEditor.getValue() + "\nP5::init");
 }
+
+const selectAllScripts = () => {
+  codeEditor.focus();
+  codeEditor.execCommand("selectAll");
+};
+

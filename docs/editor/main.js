@@ -15,7 +15,7 @@ const codeEditor = CodeMirror.fromTextArea(
 );
 
 codeEditor.setOption("extraKeys", {
-  "Ctrl-Enter": function(cm) {
+  "Ctrl-Enter": function (cm) {
     runScript()
   }
 });

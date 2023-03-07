@@ -3,6 +3,23 @@ window.Buffer = window['buffer'].Buffer;
 const { DefaultRubyVM } = window["ruby-wasm-wasi"];
 const globalData = {};
 
+const codeEditor = CodeMirror.fromTextArea(
+  document.getElementById("input"),
+  {
+    theme: 'rubyblue',
+    mode: "text/x-ruby",
+    indentUnit: 2,
+    matchBrackets: true,
+    autoCloseBrackets: true
+  }
+);
+
+codeEditor.setOption("extraKeys", {
+  "Ctrl-Enter": function(cm) {
+    runScript()
+  }
+});
+
 const main = async () => {
   // Fetch and instantiate WebAssembly binary
   const response = await fetch(
@@ -29,6 +46,5 @@ const main = async () => {
 main();
 
 const runScript = () => {
-  let s = document.querySelector("textarea").value
-  globalData.vm.eval(s + "\nP5::init");  
+  globalData.vm.eval(codeEditor.getValue() + "\nP5::init");
 }

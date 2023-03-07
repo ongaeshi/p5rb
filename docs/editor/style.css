@@ -1,0 +1,36 @@
+nav {
+    outline: solid 1px #a2a5a8;
+}
+
+.rob-navbar {
+    background-color: #f8f9fa !important;
+    color: #25292e !important;
+}
+
+.navbar-brand {
+    font-size: 1.1rem;
+}
+
+.CodeMirror {
+    border: 1px solid #eee;
+    height: 240px;
+    font-size: 16px;
+}
+
+@media (min-width: 768px) { /* Medium(md) */
+    .CodeMirror {
+        height: 320px;
+    }          
+}
+
+@media (min-width: 992px) { /* Large(lg) */
+    .CodeMirror {
+        height: 540px;
+    }          
+}
+
+@media (min-width: 1200px) { /* Extra Large(xl) */
+    .CodeMirror {
+        height: 800px;
+    }          
+}

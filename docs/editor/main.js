@@ -21,6 +21,17 @@ codeEditor.setOption("extraKeys", {
 });
 
 const main = async () => {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const code = urlParams.get('q')
+  if (code !== null) {
+    if (code === "") {
+      codeEditor.setValue("")
+    } else {
+      codeEditor.setValue(LZString.decompressFromEncodedURIComponent(code))
+    }
+  }
+
   // Fetch and instantiate WebAssembly binary
   const response = await fetch(
     //      Tips: Replace the binary with debug info if you want symbolicated stack trace.
@@ -43,12 +54,20 @@ const main = async () => {
   document.getElementById("run").onclick = runScript;
   document.getElementById("clear").onclick = selectAllScripts;
 
+  codeEditor.focus();
+
   runScript();
 };
 
 main();
 
 const runScript = () => {
+  // Rewrite URL
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  urlParams.set("q", LZString.compressToEncodedURIComponent(codeEditor.getValue()))
+  history.replaceState('', '', "?" + urlParams.toString());
+
   globalData.vm.eval(codeEditor.getValue() + "\nP5::init");
 }
 

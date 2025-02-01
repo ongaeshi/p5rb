@@ -70,6 +70,7 @@ const runScript = () => {
   urlParams.set("q", LZString.compressToEncodedURIComponent(codeEditor.getValue()))
   history.replaceState('', '', "?" + urlParams.toString());
   const vm = globalData.vm;
+  document.getElementById("error-console").value = "";
 
   try {
     vm.eval(codeEditor.getValue());
@@ -82,7 +83,12 @@ const runScript = () => {
     vm.eval("P5").call("init", vm.wrap(p))
 
     p.setup = function () {
-      vm.eval("setup")
+      try {
+        vm.eval("setup")
+      } catch (e) {
+        document.getElementById("error-console").value = e.message + "\n";
+        throw e
+      }
       // p.createCanvas(400, 400);
       // p.background(200);
     };
@@ -99,7 +105,7 @@ const runScript = () => {
       try {
         vm.eval("draw");
       } catch (e) {
-        console.error(e.message);
+        document.getElementById("error-console").value = e.message;
         throw e
       }
       // p.fill(255, 0, 0);

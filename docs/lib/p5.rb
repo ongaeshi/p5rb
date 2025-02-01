@@ -275,58 +275,61 @@ def method_missing(sym, *args, &block)
 end
 
 # Add new p5() to window.constructors.p5()
-JS.eval("window.constructors = { p5: (...args) => new p5(...args) };")
+# JS.eval("window.constructors = { p5: (...args) => new p5(...args) };")
 
 module P5
   Vector = JS.global[:p5][:Vector]
 
   module_function
 
-  def init(query = "main", obj = self)
-    unless query.is_a?(String)
-      query, obj = "main", query
-    end
+  # def init(query = "main", obj = self)
+  def init(p5)
+    # unless query.is_a?(String)
+    #   query, obj = "main", query
+    # end
 
-    $p5&.remove()
-    $p5 = nil
+    # $p5&.remove()
+    $p5 = p5
 
-    sketch = ->(p5) {
-      $p5 = p5
-      init_method(obj, :preload)
-      init_method(obj, :setup)
-      init_method(obj, :draw)
-      init_event_method(obj, :mouseMoved)
-      init_event_method(obj, :mouseDragged)
-      init_event_method(obj, :mousePressed)
-      init_event_method(obj, :mouseReleased)
-      init_event_method(obj, :mouseClicked)
-      init_event_method(obj, :doubleClicked)
-      init_event_method(obj, :mouseWheel)
-      init_event_method(obj, :keyPressed)
-      init_event_method(obj, :keyReleased)
-      init_event_method(obj, :keyTyped)
-    }
+    # sketch = ->(p5) {
+    #   $p5 = p5
+    #   init_method(obj, :preload)
+    #   init_method(obj, :setup)
+    #   init_method(obj, :draw)
+    #   init_event_method(obj, :mouseMoved)
+    #   init_event_method(obj, :mouseDragged)
+    #   init_event_method(obj, :mousePressed)
+    #   init_event_method(obj, :mouseReleased)
+    #   init_event_method(obj, :mouseClicked)
+    #   init_event_method(obj, :doubleClicked)
+    #   init_event_method(obj, :mouseWheel)
+    #   init_event_method(obj, :keyPressed)
+    #   init_event_method(obj, :keyReleased)
+    #   init_event_method(obj, :keyTyped)
+    # }
     
-    container = JS.global.document.querySelector(query)
-    container.innerHTML = ""
-    JS.global.window.constructors.p5(sketch, container)
+    # container = JS.global.document.querySelector(query)
+    # container.innerHTML = ""
+    # JS.global.window.constructors.p5(sketch, container)
   end
 
-  def init_method(obj, sym)
-    if obj.respond_to?(sym, true)
-      m = obj.method(sym)
-      $p5[sym] = ->() { m.call() }
-    end
-  end
+  # def init_method(obj, sym)
+  #   if obj.respond_to?(sym, true)
+  #     m = obj.method(sym)
+  #     $p5[sym] = ->() {
+  #         m.call()
+  #     }
+  #   end
+  # end
 
-  def init_event_method(obj, sym)
-    if obj.respond_to?(sym, true)
-      m = obj.method(sym)
-      if m.parameters.count >= 1
-        $p5[sym] = ->(e) { m.call(e) }
-      else
-        $p5[sym] = ->(e) { m.call() }
-      end
-    end
-  end
+  # def init_event_method(obj, sym)
+  #   if obj.respond_to?(sym, true)
+  #     m = obj.method(sym)
+  #     if m.parameters.count >= 1
+  #       $p5[sym] = ->(e) { m.call(e) }
+  #     else
+  #       $p5[sym] = ->(e) { m.call() }
+  #     end
+  #   end
+  # end
 end

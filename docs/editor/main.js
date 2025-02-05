@@ -97,8 +97,19 @@ const runScript = () => {
   // Initialize p5.js
   function sketch(p5) {
     vm.eval("P5").call("init", vm.wrap(p5))
+    registerRubyMethod(p5, "preload");
     registerRubyMethod(p5, "setup");
     registerRubyMethod(p5, "draw");
+    registerRubyMethod(p5, "mouseMoved");
+    registerRubyMethod(p5, "mouseDragged");
+    registerRubyMethod(p5, "mousePressed");
+    registerRubyMethod(p5, "mouseReleased");
+    registerRubyMethod(p5, "mouseClicked");
+    registerRubyMethod(p5, "doubleClicked");
+    registerRubyMethod(p5, "mouseWheel");
+    registerRubyMethod(p5, "keyPressed");
+    registerRubyMethod(p5, "keyReleased");
+    registerRubyMethod(p5, "keyTyped");
   }
 
   myP5 && myP5.remove();

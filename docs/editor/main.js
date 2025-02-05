@@ -79,39 +79,22 @@ const runScript = () => {
     console.error("ppp" + e);
   }
 
-  // Initialize p5.js
-  function sketch(p) {
-    vm.eval("P5").call("init", vm.wrap(p))
-
-    p.setup = function () {
+  function registerRubyMethod(p5, name) {
+    p5[name] = function () {
       try {
-        vm.eval("setup")
+        vm.eval(name)
       } catch (e) {
         document.getElementById("error-console").value = e.message + "\n";
         throw e
       }
-      // p.createCanvas(400, 400);
-      // p.background(200);
     };
+  }
 
-    p.draw = function () {
-      // try {
-      //   // console.log("hello")
-      //   p.background(200);
-      //   p.fill(255, 0, 0);
-      //   p.rect(50, 50, 100, 100);
-      // } catch (e) {
-      //   console.error("hi" + e);
-      // }
-      try {
-        vm.eval("draw");
-      } catch (e) {
-        document.getElementById("error-console").value = e.message;
-        throw e
-      }
-      // p.fill(255, 0, 0);
-      // p.ellipse(p.width / 2, p.height / 2, 50, 50);
-    };
+  // Initialize p5.js
+  function sketch(p) {
+    vm.eval("P5").call("init", vm.wrap(p))
+    registerRubyMethod(p, "setup");
+    registerRubyMethod(p, "draw");
   }
 
   myP5 && myP5.remove();

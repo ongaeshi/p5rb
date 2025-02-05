@@ -76,7 +76,8 @@ const runScript = () => {
   try {
     vm.eval(codeEditor.getValue());
   } catch (e) {
-    console.error("ppp" + e);
+    document.getElementById("error-console").value += e.message + "\n"
+    throw e
   }
 
   function registerRubyMethod(p5, name) {
@@ -88,7 +89,7 @@ const runScript = () => {
       try {
         vm.eval(name)
       } catch (e) {
-        document.getElementById("error-console").value = e.message + "\n";
+        document.getElementById("error-console").value += e.message + "\n"
         throw e
       }
     };

@@ -80,6 +80,10 @@ const runScript = () => {
   }
 
   function registerRubyMethod(p5, name) {
+    let isDefined = vm.eval(`defined?(${name}) == "method"`).toJS()
+    if (!isDefined) {
+      return
+    }
     p5[name] = function () {
       try {
         vm.eval(name)
@@ -91,10 +95,10 @@ const runScript = () => {
   }
 
   // Initialize p5.js
-  function sketch(p) {
-    vm.eval("P5").call("init", vm.wrap(p))
-    registerRubyMethod(p, "setup");
-    registerRubyMethod(p, "draw");
+  function sketch(p5) {
+    vm.eval("P5").call("init", vm.wrap(p5))
+    registerRubyMethod(p5, "setup");
+    registerRubyMethod(p5, "draw");
   }
 
   myP5 && myP5.remove();

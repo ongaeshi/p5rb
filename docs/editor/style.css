@@ -15,23 +15,22 @@ nav {
     border: 1px solid #eee;
     height: 240px;
     font-size: 16px;
-    max-width: 1024px;
 }
 
 @media (min-width: 768px) { /* Medium(md) */
     .CodeMirror {
         height: 320px;
-    }
+    }          
 }
 
 @media (min-width: 992px) { /* Large(lg) */
     .CodeMirror {
         height: 540px;
-    }
+    }          
 }
 
 @media (min-width: 1200px) { /* Extra Large(xl) */
     .CodeMirror {
         height: 800px;
-    }
+    }          
 }

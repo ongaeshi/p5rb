@@ -2,17 +2,15 @@
 window.Buffer = window['buffer'].Buffer;
 const { DefaultRubyVM } = window["ruby-wasm-wasi"];
 const globalData = {};
-let myP5 = null;
 
 const codeEditor = CodeMirror.fromTextArea(
   document.getElementById("input"),
   {
-    theme: 'default',
+    theme: 'rubyblue',
     mode: "text/x-ruby",
     indentUnit: 2,
     matchBrackets: true,
-    autoCloseBrackets: true,
-    lineNumbers: true
+    autoCloseBrackets: true
   }
 );
 
@@ -47,9 +45,8 @@ const main = async () => {
 
   globalData.vm = vm;
 
-  const p5rb = await fetch("../lib/p5.rb");
-  const t = await p5rb.text();
-
+  const p5 = await fetch("../lib/p5.rb");
+  const t = await p5.text();
   vm.eval(t);
 
   vm.printVersion();
@@ -70,54 +67,12 @@ const runScript = () => {
   const urlParams = new URLSearchParams(queryString);
   urlParams.set("q", LZString.compressToEncodedURIComponent(codeEditor.getValue()))
   history.replaceState('', '', "?" + urlParams.toString());
-  const vm = globalData.vm;
-  document.getElementById("error-console").value = "";
 
-  try {
-    vm.eval(codeEditor.getValue());
-  } catch (e) {
-    document.getElementById("error-console").value += e.message + "\n"
-    throw e
-  }
-
-  function registerRubyMethod(p5, name) {
-    let isDefined = vm.eval(`defined?(${name}) == "method"`).toJS()
-    if (!isDefined) {
-      return
-    }
-    p5[name] = function () {
-      try {
-        vm.eval(name)
-      } catch (e) {
-        document.getElementById("error-console").value += e.message + "\n"
-        throw e
-      }
-    };
-  }
-
-  // Initialize p5.js
-  function sketch(p5) {
-    vm.eval("P5").call("init", vm.wrap(p5))
-    registerRubyMethod(p5, "preload");
-    registerRubyMethod(p5, "setup");
-    registerRubyMethod(p5, "draw");
-    registerRubyMethod(p5, "mouseMoved");
-    registerRubyMethod(p5, "mouseDragged");
-    registerRubyMethod(p5, "mousePressed");
-    registerRubyMethod(p5, "mouseReleased");
-    registerRubyMethod(p5, "mouseClicked");
-    registerRubyMethod(p5, "doubleClicked");
-    registerRubyMethod(p5, "mouseWheel");
-    registerRubyMethod(p5, "keyPressed");
-    registerRubyMethod(p5, "keyReleased");
-    registerRubyMethod(p5, "keyTyped");
-  }
-
-  myP5 && myP5.remove();
-  myP5 = new p5(sketch, 'main');
+  globalData.vm.eval(codeEditor.getValue() + "\nP5::init");
 }
 
 const selectAllScripts = () => {
   codeEditor.focus();
   codeEditor.execCommand("selectAll");
 };
+

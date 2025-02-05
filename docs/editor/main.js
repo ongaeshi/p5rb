@@ -7,11 +7,12 @@ let myP5 = null;
 const codeEditor = CodeMirror.fromTextArea(
   document.getElementById("input"),
   {
-    theme: 'rubyblue',
+    theme: 'default',
     mode: "text/x-ruby",
     indentUnit: 2,
     matchBrackets: true,
-    autoCloseBrackets: true
+    autoCloseBrackets: true,
+    lineNumbers: true
   }
 );
 

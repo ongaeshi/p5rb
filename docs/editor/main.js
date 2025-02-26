@@ -47,7 +47,7 @@ const main = async () => {
 
   globalData.vm = vm;
 
-  const p5rb = await fetch("../lib/p5.rb");
+  const p5rb = await fetch("../lib/p5editor.rb");
   const t = await p5rb.text();
 
   vm.eval(t);
